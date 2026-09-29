@@ -1,6 +1,6 @@
 """LSC_hw vs feasibility-range compression, 7 ibm_fez instances, 4,096 shots/pt.
-Values from reports/nersc_phase1_report.tex (feasibility-range table), which were
-re-derived from results/grids_*.npz."""
+Values computed from the per-point grid data (results/grids_*.npz, archived on
+Zenodo, doi:10.5281/zenodo.23040298); see paper Sec. III-B."""
 import matplotlib.pyplot as plt
 from scipy import stats
 labels = ['6 low-vol', '8 low-vol', '8 TSLA', '12 low-vol', '12 high-vol', '16 low-vol', '16 high-vol']

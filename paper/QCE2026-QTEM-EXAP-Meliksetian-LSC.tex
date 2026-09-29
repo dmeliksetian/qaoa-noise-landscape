@@ -12,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{url}
 
 \graphicspath{{../figures/}}
 
@@ -20,13 +21,11 @@
 \newcommand{\FF}{\mathrm{FF}}
 \newcommand{\OPS}{\mathrm{OPS}}
 \newcommand{\AR}{\mathrm{AR}}
-% Placeholder for results still being computed; remove before posting.
-\newcommand{\pending}[1]{\textcolor{red}{\textbf{[Pending:} #1\textbf{]}}}
 
 \begin{document}
 
-\title{Noise in Constrained QAOA on IBM Heron Hardware:\\
-Landscape Compression Tracks Feasibility Loss}
+\title{Landscape Compression in Constrained QAOA\\
+Tracks Feasibility Loss on IBM Heron Hardware}
 
 \author{
 \IEEEauthorblockN{Dikran S. Meliksetian\thanks{The author is a Qiskit Advocate.}}
@@ -44,31 +43,29 @@ Landscape Compression Tracks Feasibility Loss}
 \begin{abstract}
 We study how hardware noise changes the $p{=}1$ Quantum Approximate
 Optimization Algorithm (QAOA) landscape for cardinality-constrained
-portfolio-selection problems on \textit{ibm\_fez} (IBM Heron r2), across
-seven instances from $n{=}6$ to $n{=}16$ qubits, each measured on a
-$7{\times}7$ parameter grid at both 4{,}096 and 8{,}192 shots per point.
-The first version of this paper proposed Landscape Span Compression
-(LSC), the fractional loss of energy range across the grid, as a device
-benchmark, based on stable values of 0.24--0.30 at $n{\le}8$. The larger
-study shows why that does not hold. Hardware LSC rises to 0.72--0.81 at
-$n{=}16$ and is well described by an exponential decay in transpiled CZ
-count ($R^2{=}0.96$ and $0.88$ at the two shot counts). A statistic built
-only from the fraction of feasible shots reproduces it (Pearson
-$r{=}0.954$, $p{=}0.0009$), and the energy of feasible shots alone is
-unchanged by noise to within 0.02. For penalty-encoded constrained
-problems, landscape compression is therefore a circuit-fidelity effect
-expressed as loss of feasible samples, as noise-flattening models of
-QAOA predict, not a change in landscape shape. The same mechanism
-affects the usual test of classical-to-hardware parameter transfer: grid
-verdicts on whether the optimum moves agree across shot counts for only
-2 of 7 instances, and where the hardware optimum does move, it moves
-toward higher feasibility. Best-feasible approximation ratios are
-$\geq0.9993$ throughout, but the feasible sets are nearly degenerate in
-energy, so this is a weak test of solution quality on these instances.
-We withdraw the benchmark and noise-model-gap claims of the first
-version, correct its solution-quality figures, and describe a
-measurement protocol that separates feasibility loss from
-solution-quality effects.
+portfolio problems on \textit{ibm\_fez} (IBM Heron r2): seven instances
+from $n{=}6$ to $16$ qubits, each on a $7{\times}7$ parameter grid at
+4{,}096 and 8{,}192 shots per point. The first version of this paper
+proposed Landscape Span Compression (LSC), the fractional loss of energy
+range across the grid, as a device benchmark, based on stable values of
+0.24--0.30 at $n{\le}8$. The larger study shows why that does not hold.
+Hardware LSC rises to 0.72--0.81 at $n{=}16$, growing with circuit size
+($R^2{=}0.96$ and $0.88$ for an exponential decay in CZ count). Because
+the landscape energy averages over all shots, it is nearly linear in the
+feasible fraction, and a statistic built only from that fraction
+reproduces LSC (Pearson $r{=}0.954$). For these penalty-encoded problems,
+landscape compression is a circuit-fidelity effect expressed as loss of
+feasible samples, as noise-flattening models of QAOA predict. The same
+mechanism biases the usual test of parameter transfer: grid verdicts on
+whether the optimum moves agree across shot counts for only 2 of 7
+instances, and hardware optima move toward higher feasibility. Even in
+noiseless simulation, $p{=}1$ QAOA samples the feasible set of these
+instances almost uniformly, so best-feasible approximation ratios
+($\geq0.9993$) are uninformative and the only effect noise can remove is
+a raised feasible fraction. We withdraw the benchmark and noise-model-gap
+claims of the first version, correct its solution-quality figures, and
+describe a protocol that separates feasibility loss from solution
+quality.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -81,8 +78,8 @@ parameter transfer, metric validity, reproducibility
 \label{sec:intro}
 
 The Quantum Approximate Optimization Algorithm
-(QAOA)~\cite{farhi2014quantum} is the most widely run variational
-algorithm for combinatorial optimization on noisy intermediate-scale
+(QAOA)~\cite{farhi2014quantum} is one of the most widely studied variational
+algorithms for combinatorial optimization on noisy intermediate-scale
 hardware~\cite{preskill2018quantum}. Hardware studies have measured how noise degrades its
 approximation ratio on unconstrained problems~\cite{harrigan2021quantum, lotshaw2022empirical},
 and barren-plateau results bound how trainable it remains as circuits
@@ -120,19 +117,21 @@ every instance measured at two shot counts. Its findings replace the
 first version's central claims:
 
 \begin{itemize}
-  \item Hardware LSC grows with circuit size and is explained by
-        two-qubit gate count; it is not a device-level quantity
+  \item Hardware LSC grows with circuit size (qubit number, CZ count
+        and depth rise together here); it is not a device-level quantity
         (Section~\ref{sec:lsc-scaling}).
-  \item The growth is almost entirely the loss of feasible samples,
+  \item On these instances the growth is almost entirely the loss of
+        feasible samples,
         consistent with the noise-flattening model applied to a
         penalty-encoded QUBO (Sections~\ref{sec:feasibility}
         and~\ref{sec:theory}).
   \item Grid-based tests of parameter transfer are not reproducible at
         this resolution and are themselves biased toward feasibility
         (Section~\ref{sec:ops}).
-  \item Best-feasible approximation ratios near 1 are close to automatic
-        on these instances and do not by themselves measure QAOA's
-        effect (Section~\ref{sec:ar}).
+  \item Even without noise, $p{=}1$ QAOA does not concentrate probability
+        within the feasible set of these instances, so best-feasible
+        approximation ratios near 1 are close to automatic and noise has
+        no within-feasible advantage to erode (Section~\ref{sec:ar}).
 \end{itemize}
 
 Section~\ref{sec:v1} lists every claim of the first version and its
@@ -163,29 +162,29 @@ lists the instances. The feasible set has $\binom{n}{k}$ members, a
 fraction 31\%, 27\%, 23\% and 20\% of all bitstrings for $n{=}6$, 8, 12
 and 16.
 
-\begin{table}[htbp]
-\caption{Instances. Low-vol and high-vol use lower- and higher-volatility
-ticker sets; 8~TSLA is the high-volatility $n{=}8$ instance of the first
-version.}
+\begin{table*}[t]
+\caption{Instances and transpiled hardware circuits on \textit{ibm\_fez}.
+Low-vol and high-vol use lower- and higher-volatility ticker sets; 8~TSLA
+is the high-volatility $n{=}8$ instance of the first version. CZ count and
+depth are for the actual hardware job at each shot count.}
 \label{tab:instances}
 \begin{center}
-\begin{tabular}{@{}lccl@{}}
+\begin{tabular}{@{}lccclcc@{}}
 \toprule
-\textbf{Instance} & $n$ & $\binom{n}{k}$ & \textbf{Tickers} \\
+& & & & & \multicolumn{2}{c}{\textbf{CZ count / depth}} \\
+\textbf{Instance} & $n$ & $\binom{n}{k}$ & $E^*$ & \textbf{Tickers} & \textbf{4{,}096 sh.} & \textbf{8{,}192 sh.} \\
 \midrule
-6 low-vol   & 6  & 20     & AAPL MSFT JPM XOM JNJ AMZN \\
-8 low-vol   & 8  & 70     & 6 low-vol + GOOGL BRK-B \\
-8 TSLA      & 8  & 70     & 6 low-vol + TSLA IBM \\
-12 low-vol  & 12 & 924    & 8 low-vol + PG KO WMT MRK \\
-12 high-vol & 12 & 924    & 6 low-vol + TSLA IBM NVDA \\
-            &    &        & \quad META COIN PLTR \\
-16 low-vol  & 16 & 12{,}870 & 12 low-vol + PEP UNH HD MCD \\
-16 high-vol & 16 & 12{,}870 & 12 high-vol + AMD TSM \\
-            &    &        & \quad XYZ RIVN \\
+6 low-vol   & 6  & 20       & $-16.885$   & AAPL MSFT JPM XOM JNJ AMZN            & 50 / 143  & 50 / 121 \\
+8 low-vol   & 8  & 70       & $-46.265$   & 6 low-vol + GOOGL BRK-B               & 103 / 217 & 91 / 188 \\
+8 TSLA      & 8  & 70       & $-56.563$   & 6 low-vol + TSLA IBM                  & 97 / 200  & 93 / 204 \\
+12 low-vol  & 12 & 924      & $-156.361$  & 8 low-vol + PG KO WMT MRK             & 247 / 366 & 279 / 503 \\
+12 high-vol & 12 & 924      & $-264.648$  & 6 low-vol + TSLA IBM NVDA META COIN PLTR & 246 / 421 & 242 / 407 \\
+16 low-vol  & 16 & 12{,}870 & $-434.338$  & 12 low-vol + PEP UNH HD MCD           & 530 / 754 & 529 / 782 \\
+16 high-vol & 16 & 12{,}870 & $-1134.467$ & 12 high-vol + AMD TSM XYZ RIVN        & 500 / 622 & 493 / 720 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\end{table}
+\end{table*}
 
 \subsection{Circuits, grid and execution}
 
@@ -200,9 +199,13 @@ simulation, simulation with the calibration noise model
 \textit{ibm\_fez} (Heron r2, 156 qubits) through \texttt{SamplerV2} in
 batch mode, with circuits transpiled to $\{CZ, R_Z, SX, X\}$ at
 optimization level~3. Every instance was run at both 4{,}096 and 8{,}192
-shots per grid point with the same fixed $(\gamma^*,\beta^*)$. The
-transpiled circuits contain about 48, 103, 250 and 500 CZ gates at
-$n{=}6$, 8, 12 and 16.
+shots per grid point with the same fixed $(\gamma^*,\beta^*)$. Table~\ref{tab:instances}
+gives the transpiled CZ count and depth of every hardware job, from 50
+CZ at $n{=}6$ to 493--530 at $n{=}16$; placement was left to the
+transpiler, so counts differ slightly between runs of the same instance.
+The 4{,}096-shot runs at $n{\le}8$ are the pilot runs of the first
+version; the remaining runs used 1{,}006\,s of QPU time under the NERSC
+allocation.
 
 \subsection{Quantities}
 \label{sec:quantities}
@@ -248,7 +251,12 @@ at 4{,}096 shots and $k = 0.00261 \pm 0.00044$ ($R^2{=}0.876$) at 8{,}192
 shots (Fig.~\ref{fig:cz}). The metric also saturates: the $n{=}16$
 points barely exceed the $n{=}12$ points despite about twice the CZ
 count, as expected for a quantity bounded by~1. The stability seen at
-$n{\le}8$ reflected a narrow range of circuit sizes.
+$n{\le}8$ reflected a narrow range of circuit sizes. Because qubit
+number, CZ count and depth increase together across these instances,
+the fit cannot say which of them drives the growth; CZ count is simply
+the natural proxy for accumulated error. The calibration noise model
+gives a lower LSC than hardware at every point in Table~\ref{tab:lsc}:
+it consistently overestimates circuit fidelity.
 
 \begin{table}[htbp]
 \caption{LSC on \textit{ibm\_fez}, $7{\times}7$ grid. ``n'': calibration
@@ -303,8 +311,11 @@ bitstring (dotted) is infeasible.}
 Splitting $L$ at the grid centre makes the effect explicit
 (Table~\ref{tab:split}). The all-shots energy rises by 3.65 from ideal
 to hardware, while the energy of feasible shots alone changes by 0.02.
-All of the apparent compression at this point is the feasible fraction
-falling from 37.1\% to 28.5\%.
+Because all feasible energies here lie within 0.489 of each other, this
+bounds how much noise can alter feasible energies rather than showing
+that it cannot; what the split does show is that essentially all of the
+change in $L$ at this point comes from the feasible fraction falling
+from 37.1\% to 28.5\%.
 
 \begin{table}[htbp]
 \caption{12 low-vol at the grid centre, 4{,}096 shots.}
@@ -322,11 +333,25 @@ Hardware & 28.5\% & $-147.56$ & $-156.12$ \\
 \end{center}
 \end{table}
 
-The same holds across the grid and across instances. We define a
-feasibility-range compression that mirrors LSC but uses no energies,
-$1-\mathrm{range}(\FF_\mathrm{hw})/\mathrm{range}(\FF_\mathrm{ideal})$.
-It tracks hardware LSC across all seven instances with Pearson
-$r{=}0.954$ ($p{=}0.0009$; Fig.~\ref{fig:feascomp}). The mean feasible
+The same structure holds across the grid. Writing $\bar{E}_f$ and
+$\bar{E}_i$ for the mean energies of feasible and infeasible shots at a
+grid point,
+\begin{equation}
+  L = \FF\,\bar{E}_f + (1-\FF)\,\bar{E}_i .
+  \label{eq:decomp}
+\end{equation}
+If $\bar{E}_f$ and $\bar{E}_i$ vary little across the grid, $L$ is
+linear in $\FF$, $\LS(L) \approx (\bar{E}_i-\bar{E}_f)\,
+\mathrm{range}(\FF)$, and LSC reduces to a feasibility-range
+compression $1-\mathrm{range}(\FF_\mathrm{hw})/\mathrm{range}(\FF_\mathrm{ideal})$
+that uses no energies. The empirical content is therefore how constant
+the conditional means are. Across the seven instances the two quantities
+agree with Pearson $r{=}0.954$ ($p{=}0.0009$; Fig.~\ref{fig:feascomp}).
+With seven points in two size groups, the correlation mainly reflects
+the difference between $n{\le}8$ and $n{\ge}12$; within the $n{=}12$
+pair the order reverses (12 high-vol lies above the identity line and
+12 low-vol below it), indicating that the mix of infeasible shells, and
+hence $\bar{E}_i$, varies more across the grid for those instances. The mean feasible
 fraction over the grid barely changes (for 12 low-vol, 0.201, 0.200 and
 0.202 for ideal, noisy and hardware); what collapses is its spread.
 In the ideal landscape, a sharp feasibility peak near the optimum is
@@ -365,8 +390,8 @@ $\LS(L_\varepsilon) \approx F\,\LS(L_0)$ and $\LSC \approx 1-F$. LSC is
 thus an estimate of circuit fidelity, which decays exponentially in gate
 count, as observed. For a penalty-encoded problem, $\bar{C}$ is dominated
 by infeasible bitstrings, so the loss of fidelity appears as a loss of
-feasible samples while the feasible energies themselves stay put, as in
-Table~\ref{tab:split}. The fitted $k$ values correspond to a per-CZ
+feasible samples, while feasible energies, confined to a narrow band on
+these instances, change little (Table~\ref{tab:split}). The fitted $k$ values correspond to a per-CZ
 decay of 0.26--0.30\%, the same order as two-qubit error rates reported
 for Heron devices; we do not claim a closer match, because $k$ also
 absorbs single-qubit, idle and readout error. The model assumes unital
@@ -376,8 +401,9 @@ relaxes toward $|0\cdots0\rangle$ rather than the uniform state.
 Equation~\eqref{eq:flatten} also explains why the optimum becomes hard
 to locate. Near the optimum $L_\varepsilon \approx L_\mathrm{min} +
 \tfrac12 F\kappa\,\delta^2$, where $\kappa$ is the noiseless curvature.
-With per-point statistical error $\sigma$, displacements smaller than
-about $\sqrt{2\sigma/(F\kappa)}$ cannot be resolved, and this limit
+With standard error $\sigma_\Delta$ on the difference between two
+point estimates, displacements smaller than roughly
+$\sqrt{2\sigma_\Delta/(F\kappa)}$ cannot be resolved, and this limit
 grows as $F$ falls with circuit size~\cite{wang2021noise}.
 
 \subsection{Parameter transfer}
@@ -424,8 +450,12 @@ measured window, so OPS cannot be evaluated from the existing data.
 
 Second, OPS inherits the feasibility bias of $L$. In all six
 violations, the hardware argmin has more feasible shots than the ideal
-argmin (21.9--47.6\% against 20.0--45.8\%): on hardware, the minimum of
-the all-shots energy tends to sit where the most shots are feasible.
+argmin (21.9--47.6\% against 20.0--45.8\%); six of six in the same
+direction gives $p\approx0.03$ (two-sided sign test). By
+Eq.~\eqref{eq:decomp} this is expected: where feasible and infeasible
+energies are well separated, a higher feasible fraction lowers $L$. We
+did not test whether the hardware argmin coincides with the
+feasibility maximum.
 A grid OPS verdict computed on $L$ therefore mixes a shift in the
 solution-quality optimum with the feasibility effect of
 Section~\ref{sec:feasibility}. Answering the transfer question requires
@@ -453,7 +483,7 @@ most frequent bitstring is infeasible.}
 \begin{center}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Instance} & \textbf{Shot-avg.\ (v1)} & \textbf{Best-feasible} & \textbf{Mode inf.} \\
+\textbf{Instance} & \textbf{Shot-avg.\ (v1 method)} & \textbf{Best-feasible} & \textbf{Mode inf.} \\
 \midrule
 6 low-vol   & 0.905--0.945 & 1.0000--1.0000 & 0/6 \\
 8 low-vol   & 0.932--0.964 & 1.0000--1.0000 & 1/6 \\
@@ -470,18 +500,60 @@ most frequent bitstring is infeasible.}
 This is a weak test on these instances. Their feasible sets are nearly
 degenerate in energy: every feasible solution is within 0.31\% of the
 optimum for 12 low-vol and within 0.63--1.71\% for $n{\le}8$, so any
-feasible sample scores $\AR\geq0.98$ and most score above 0.99. Best-feasible
+feasible sample scores $\AR\geq0.98$. Best-feasible
 AR near 1 mainly shows that feasible shots were produced. For the same
 reason, the solution-quality cost of the OPS violations above, which
 is at most 0.00013 in best-feasible AR, is close to guaranteed and says
 little about transfer.
 
-A test that isolates QAOA's contribution compares the probability of
-sampling the exact optimum, $P(x^*)$, with the uniform-feasible baseline
-$\FF/\binom{n}{k}$, and the mean energy of feasible shots with the mean
-over all feasible bitstrings. \pending{$P(x^*)$ and feasible-conditional
-mean energy for all instances, conditions and argmin cells, from the
-stored counts; table and one paragraph.}
+A test that isolates QAOA's contribution asks whether the feasible
+shots favour good solutions. We use two statistics at the reference
+point: the frequency of the optimum among feasible shots relative to the
+uniform value, $P(x^*\,|\,\mathrm{feasible})\binom{n}{k}$ (1 means no
+preference), and the position of the mean feasible-shot energy between
+the uniform-feasible mean $\bar{E}_\mathrm{unif}$ and the optimum,
+$q = (\bar{E}_\mathrm{unif} - \bar{E}_f)/(\bar{E}_\mathrm{unif} - E^*)$
+(0 for uniform sampling, 1 if every feasible shot is optimal).
+Table~\ref{tab:sq} gives both.
+
+\begin{table}[htbp]
+\caption{Concentration within the feasible set at the reference point,
+4{,}096\,/\,8{,}192 shots. Enrichment:
+$P(x^*|\mathrm{feasible})\binom{n}{k}$, shown only for $n{\le}8$, where the
+optimum was sampled 25--261 times; at $n{\ge}12$ it was sampled 0--7
+times. $q$: see text.}
+\label{tab:sq}
+\begin{center}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{Enrichment}} & \multicolumn{2}{c}{$q$} \\
+\textbf{Instance} & \textbf{Ideal} & \textbf{HW} & \textbf{Ideal} & \textbf{HW} \\
+\midrule
+6 low-vol   & 0.98 / 1.05 & 1.02 / 0.81 & $-0.03$ / $+0.01$ & $-0.04$ / $-0.01$ \\
+8 low-vol   & 0.81 / 1.08 & 0.66 / 0.74 & $-0.00$ / $-0.02$ & $-0.10$ / $-0.11$ \\
+8 TSLA      & 1.10 / 0.75 & 0.80 / 0.99 & $+0.00$ / $+0.01$ & $-0.08$ / $+0.00$ \\
+12 low-vol  & -- & -- & $+0.03$ / $+0.02$ & $-0.03$ / $+0.06$ \\
+12 high-vol & -- & -- & $-0.06$ / $-0.06$ & $+0.01$ / $+0.02$ \\
+16 low-vol  & -- & -- & $+0.01$ / $+0.00$ & $+0.08$ / $-0.05$ \\
+16 high-vol & -- & -- & $-0.15$ / $-0.16$ & $-0.08$ / $-0.20$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+Even without noise, $p{=}1$ QAOA shows no preference within the
+feasible set. At $n{\le}8$ the optimum appears among feasible shots at
+0.75--1.10 times the uniform rate, and at every size the ideal $q$ lies
+between $-0.06$ and $+0.03$, except 16 high-vol, where feasible shots are
+slightly worse than uniform ($q\approx-0.15$). Hardware values are
+similar. On these instances, therefore, QAOA's only effect at the
+optimized parameters is to raise the feasible fraction, and noise acts
+by removing part of that gain; there is no concentration on good
+feasible solutions for noise to erode. A likely reason is that the
+penalty term dominates the cost Hamiltonian: for 12 low-vol, penalty
+shells are about 4.6 apart while all feasible energies lie within 0.49,
+so the phase separator acts almost entirely on constraint violation.
 
 % ============================================================
 \section{Discussion}
@@ -508,18 +580,22 @@ decides whether hardware-in-the-loop optimization can be skipped. Our
 results suggest four requirements for answering it on hardware:
 
 \begin{enumerate}
-  \item \emph{Converged references.} Fix $(\gamma^*,\beta^*)$ on the
-        exact expectation, not a shot-sampled estimator, and centre the
-        search on it.
-  \item \emph{A solution-quality target.} Locate the optimum of a
-        quantity that separates QAOA's effect from feasibility loss,
-        such as $P(x^*)$ relative to the uniform-feasible baseline,
-        rather than the minimum of the all-shots energy.
+  \item \emph{Exact references.} Compute the ideal landscape and fix
+        $(\gamma^*,\beta^*)$ on the exact statevector expectation, not a
+        shot-sampled estimator, and centre the search on it.
+  \item \emph{A solution-quality target, on instances that have one.}
+        Locate the optimum of a quantity that separates QAOA's effect
+        from feasibility loss, such as $P(x^*|\mathrm{feasible})$ or
+        $q$, rather than the minimum of the all-shots energy. This
+        requires instances where noiseless QAOA concentrates within the
+        feasible set, which ours do not; a smaller penalty weight,
+        higher depth or a constraint-preserving
+        mixer~\cite{bartschi2020grover} is needed first.
   \item \emph{Resolution, not a grid cell.} Estimate the hardware
         optimum continuously by adaptive local search, with repeated
         same-point measurements in one session to separate shot noise
         from drift, and test displacements against the resolution
-        limit $\sqrt{2\sigma/(F\kappa)}$.
+        limit $\sqrt{2\sigma_\Delta/(F\kappa)}$.
   \item \emph{Fixed layouts.} Pin the physical qubit layout and repeat
         on a second patch, since placement was left to the transpiler
         here and chip-scale noise is not uniform.
@@ -542,9 +618,10 @@ circuit duration more closely than two-qubit error would indicate it.
   \item Report the best feasible sample, never the most frequent
         bitstring, as the solution: the mode was infeasible in 26\% of
         our combinations.
-  \item Check that the instance's feasible set is not near-degenerate
-        before using approximation ratio as evidence of solution
-        quality.
+  \item Before attributing solution-quality changes to noise, check in
+        noiseless simulation that QAOA concentrates probability within
+        the feasible set, and that the feasible set is not
+        near-degenerate in energy.
   \item Do not trust a single grid argmin as evidence that parameters
         transfer; repeat it at a second shot count at minimum.
 \end{itemize}
@@ -558,7 +635,10 @@ $13{\times}13$ raised hardware LSC by 0.037--0.039. The two shot-count
 runs of the same instance were taken up to a month apart, so their
 differences mix shot noise with calibration drift. The feasible sets
 of these instances are too degenerate for approximation ratio to
-discriminate solution quality.
+discriminate solution quality, and noiseless $p{=}1$ QAOA does not
+concentrate within them, so these instances cannot test how noise
+affects solution quality beyond feasibility. At $n{\ge}12$ the optimum
+is sampled too rarely to measure its enrichment directly.
 
 % ============================================================
 \section{Changes From Version 1}
@@ -582,7 +662,9 @@ $\OPS{=}0$: classical parameters transfer directly to hardware
     unconverged at $n{\ge}12$, verdicts biased by feasibility \\
 Calibration noise model explains 44--59\% of hardware LSC; Pearson
 $r{=}0.959$ structural agreement
-  & Withdrawn: both computed on the all-shots energy \\
+  & Restated: the model gives lower LSC than hardware at every point,
+    i.e.\ it overestimates circuit fidelity; the 44--59\% ratio and $r$,
+    both on the all-shots energy, are withdrawn \\
 Consistent noise cost of $\approx0.03$ AR units
   & Withdrawn: measured the average shot; best-feasible AR
     $\geq0.9993$, but uninformative here \\
@@ -605,18 +687,30 @@ common mesh.
 \section{Conclusion}
 \label{sec:conclusion}
 
-On IBM Heron hardware, noise in penalty-encoded constrained QAOA shows
-up almost entirely as loss of feasible samples. Landscape span
-compression measures that loss, grows with two-qubit gate count as
-circuit fidelity does, and is not a device benchmark. Grid tests of
+On IBM Heron hardware and for the near-degenerate portfolio instances
+studied here, noise in penalty-encoded constrained QAOA shows up almost
+entirely as loss of feasible samples. Landscape span compression
+measures that loss, grows with circuit size as circuit fidelity
+declines, and is not a device benchmark. Grid tests of
 whether classically optimized parameters transfer to hardware are not
 reproducible at practical resolutions and inherit the same feasibility
-bias. Best-feasible approximation ratios near 1 are easy to obtain on
-near-degenerate instances and do not by themselves show that QAOA
-helps. The transfer question remains open and important; answering it
-requires converged references, a solution-quality target that is
-separated from feasibility, and continuous, repeated measurement of the
-hardware optimum, which is the subject of ongoing work.
+bias. Even without noise, $p{=}1$ QAOA samples the feasible set of
+these instances almost uniformly, so best-feasible approximation ratios
+near 1 are automatic and there is no within-feasible advantage for
+noise to erode. The transfer question remains open and important;
+answering it requires instances on which QAOA concentrates within the
+feasible set, exact references, a solution-quality target separated
+from feasibility, and continuous, repeated measurement of the hardware
+optimum, which is the subject of ongoing work.
+
+% ============================================================
+\section*{Data and Code Availability}
+
+Per-point grid data, including raw shot counts for all three conditions, are
+archived on Zenodo, \url{https://doi.org/10.5281/zenodo.23040298}. Code, result summaries and device calibration
+snapshots are at \url{https://github.com/dmeliksetian/qaoa-noise-landscape}; the
+QUBO instances and shared code are at
+\url{https://github.com/dmeliksetian/qaoa-common}.
 
 % ============================================================
 \section*{Acknowledgment}
