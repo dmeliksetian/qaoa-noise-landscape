@@ -1,5 +1,7 @@
 # QAOA Noise Landscape
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23040298.svg)](https://doi.org/10.5281/zenodo.23040298)
+
 Code and results for:
 
 > D. S. Meliksetian, *Noise in Constrained QAOA on IBM Heron Hardware:
@@ -135,8 +137,8 @@ the `ar_*` fields carry a Hamiltonian constant offset.
 ### Data availability
 
 The per-point grid files (`results/grids_*.npz`, including raw shot counts)
-are too large for this repository and are archived at
-**[Zenodo DOI — to be added]**. All numbers in the paper can be recomputed
+are too large for this repository and are archived on Zenodo:
+[doi:10.5281/zenodo.23040298](https://doi.org/10.5281/zenodo.23040298). All numbers in the paper can be recomputed
 from them.
 
 ---
