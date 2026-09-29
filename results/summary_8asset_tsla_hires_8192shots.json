@@ -1,0 +1,29 @@
+{
+  "label": "8asset_tsla_hires_8192shots",
+  "n": 8,
+  "k": 4,
+  "variable_names": [
+    "AAPL",
+    "MSFT",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "AMZN",
+    "TSLA",
+    "IBM"
+  ],
+  "gamma_star": 0.12849450156052877,
+  "beta_star": 0.2777036229984607,
+  "e_optimal": -56.56299575921959,
+  "random_baseline": 0.2734375,
+  "approximation_ratios": {
+    "Ideal sim": 0.9646107224525684,
+    "Noisy sim": 0.9530514110077932,
+    "Hardware": 0.9412286372875537
+  },
+  "feasibility_at_best": {
+    "ideal": 0.557373046875,
+    "noisy": 0.5020751953125,
+    "hardware": 0.4393310546875
+  }
+}

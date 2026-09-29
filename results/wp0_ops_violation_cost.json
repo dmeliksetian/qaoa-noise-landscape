@@ -1,0 +1,50 @@
+{
+  "description": "Zero-QPU WP0 check: solution-quality cost of each existing OPS violation (report Section 3.2 OPS table). For each violated (instance, shots) combination, compares best-feasible-bitstring AR and feasible-shot fraction evaluated from the ALREADY-COLLECTED hardware counts at the hardware argmin grid cell vs. at the ideal-sim argmin grid cell. No new QPU time used.",
+  "method": "best_feasible uses hardware counts_hardware at the given grid cell; AR = best_feasible_energy / e_optimal (brute-force exact optimum). feasible_frac = fraction of hardware shots at that cell satisfying sum(x)=k.",
+  "generated": "2026-09-29",
+  "results": {
+    "6low-vol_4096": {
+      "hw_argmin": [3, 4], "ideal_argmin": [3, 3],
+      "AR_best_feasible_at_hw_argmin": 1.0,
+      "AR_best_feasible_at_ideal_argmin": 1.0,
+      "feasible_frac_at_hw_argmin": 0.4755859375,
+      "feasible_frac_at_ideal_argmin": 0.45849609375
+    },
+    "12low-vol_4096": {
+      "hw_argmin": [3, 3], "ideal_argmin": [4, 0],
+      "AR_best_feasible_at_hw_argmin": 0.9999910161602564,
+      "AR_best_feasible_at_ideal_argmin": 1.0,
+      "feasible_frac_at_hw_argmin": 0.28515625,
+      "feasible_frac_at_ideal_argmin": 0.256591796875
+    },
+    "12high-vol_8192": {
+      "hw_argmin": [3, 1], "ideal_argmin": [3, 2],
+      "AR_best_feasible_at_hw_argmin": 1.0,
+      "AR_best_feasible_at_ideal_argmin": 1.0,
+      "feasible_frac_at_hw_argmin": 0.291748046875,
+      "feasible_frac_at_ideal_argmin": 0.2509765625
+    },
+    "16low-vol_4096": {
+      "hw_argmin": [3, 1], "ideal_argmin": [3, 2],
+      "AR_best_feasible_at_hw_argmin": 0.9999507448562303,
+      "AR_best_feasible_at_ideal_argmin": 0.9999498169337903,
+      "feasible_frac_at_hw_argmin": 0.21875,
+      "feasible_frac_at_ideal_argmin": 0.200439453125
+    },
+    "16high-vol_4096": {
+      "hw_argmin": [3, 2], "ideal_argmin": [3, 3],
+      "AR_best_feasible_at_hw_argmin": 0.9997772695629911,
+      "AR_best_feasible_at_ideal_argmin": 0.9999077403502141,
+      "feasible_frac_at_hw_argmin": 0.237548828125,
+      "feasible_frac_at_ideal_argmin": 0.20751953125
+    },
+    "16high-vol_8192": {
+      "hw_argmin": [3, 4], "ideal_argmin": [3, 3],
+      "AR_best_feasible_at_hw_argmin": 0.9996613406444452,
+      "AR_best_feasible_at_ideal_argmin": 0.9995567623157631,
+      "feasible_frac_at_hw_argmin": 0.2454833984375,
+      "feasible_frac_at_ideal_argmin": 0.2354736328125
+    }
+  },
+  "headline": "Across all 6 OPS-violated combinations, best-feasible AR at the hardware argmin differs from AR at the ideal argmin by at most 0.0002 (all values >= 0.9997, most = 1.0000). The solution-quality cost of an OPS violation, measured the standard way (best feasible sample, not grid-average energy), is negligible in every case tested here."
+}

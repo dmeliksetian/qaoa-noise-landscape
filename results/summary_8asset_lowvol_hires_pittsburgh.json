@@ -1,0 +1,29 @@
+{
+  "label": "8asset_lowvol_hires_pittsburgh",
+  "n": 8,
+  "k": 4,
+  "variable_names": [
+    "AAPL",
+    "MSFT",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "AMZN",
+    "GOOGL",
+    "BRK-B"
+  ],
+  "gamma_star": 0.15663564965190077,
+  "beta_star": 0.21378191608353048,
+  "e_optimal": -46.265343264148036,
+  "random_baseline": 0.2734375,
+  "approximation_ratios": {
+    "Ideal sim": 0.9630521446949838,
+    "Noisy sim": 0.9542829451216304,
+    "Hardware": 0.9472790523454957
+  },
+  "feasibility_at_best": {
+    "ideal": 0.537841796875,
+    "noisy": 0.4951171875,
+    "hardware": 0.463623046875
+  }
+}

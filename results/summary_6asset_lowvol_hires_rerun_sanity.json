@@ -1,0 +1,25 @@
+{
+  "label": "6asset_lowvol_hires_rerun_sanity",
+  "n": 6,
+  "k": 3,
+  "variable_names": [
+    "AAPL",
+    "MSFT",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "AMZN"
+  ],
+  "gamma_star": 0.35307212672161004,
+  "beta_star": 0.22901024477664408,
+  "e_optimal": -16.885078379950897,
+  "random_baseline": 0.3125,
+  "approximation_ratios": {
+    "Ideal sim": 0.9442648150632423,
+    "Noisy sim": 0.9327247395350358
+  },
+  "feasibility_at_best": {
+    "ideal": 0.61279296875,
+    "noisy": 0.560302734375
+  }
+}

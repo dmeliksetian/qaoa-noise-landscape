@@ -1,0 +1,219 @@
+{
+  "6low-vol": {
+    "old_gamma": 0.3382695157240051,
+    "old_beta": 0.21859318817301948,
+    "old_exact_energy": -15.936388892521016,
+    "new_gamma": 0.33984329739608266,
+    "new_beta": 0.2639808045267864,
+    "new_exact_energy": -16.004266101338796,
+    "energy_gap": 0.06787720881778014,
+    "e_opt": -16.885078379950897,
+    "AR_old_point": 0.9438149195353253,
+    "AR_new_point": 0.947834871784903,
+    "within_tested_window": true,
+    "nearest_grid_cell_to_converged": [
+      3,
+      3
+    ],
+    "current_ideal_argmin_cell": [
+      3,
+      3
+    ],
+    "matches_current_ideal_argmin": true
+  },
+  "8low-vol": {
+    "old_gamma": 0.15663564965190077,
+    "old_beta": 0.21378191608353048,
+    "old_exact_energy": -44.55400970866155,
+    "new_gamma": 0.15671961475579754,
+    "new_beta": 0.255215554790935,
+    "new_exact_energy": -44.678827299338685,
+    "energy_gap": 0.12481759067713227,
+    "e_opt": -46.265343264148036,
+    "AR_old_point": 0.9630104645346351,
+    "AR_new_point": 0.9657083282458043,
+    "within_tested_window": true,
+    "nearest_grid_cell_to_converged": [
+      3,
+      3
+    ],
+    "current_ideal_argmin_cell": [
+      3,
+      3
+    ],
+    "matches_current_ideal_argmin": true
+  },
+  "8TSLA": {
+    "old_gamma": 0.12849450156052877,
+    "old_beta": 0.2777036229984607,
+    "old_exact_energy": -54.56596873111312,
+    "new_gamma": 1.6549459800501176,
+    "new_beta": 0.25881564052358574,
+    "new_exact_energy": -54.61792743977018,
+    "energy_gap": 0.05195870865706098,
+    "e_opt": -56.56299575921959,
+    "AR_old_point": 0.9646937542592772,
+    "AR_new_point": 0.9656123532118192,
+    "within_tested_window": false,
+    "nearest_grid_cell_to_converged": null,
+    "current_ideal_argmin_cell": [
+      3,
+      3
+    ],
+    "matches_current_ideal_argmin": null
+  },
+  "12low-vol": {
+    "old_gamma": 1.379841462528261,
+    "old_beta": 0.15326139042257061,
+    "old_exact_energy": -151.38166945234607,
+    "new_gamma": 1.578381467889995,
+    "new_beta": 0.18384367538616067,
+    "new_exact_energy": -153.33475267377037,
+    "energy_gap": 1.9530832214242935,
+    "e_opt": -156.36063954598802,
+    "AR_old_point": 0.9681571391105909,
+    "AR_new_point": 0.9806480270162383,
+    "within_tested_window": true,
+    "nearest_grid_cell_to_converged": [
+      4,
+      3
+    ],
+    "current_ideal_argmin_cell": [
+      4,
+      0
+    ],
+    "matches_current_ideal_argmin": false
+  },
+  "12high-vol": {
+    "old_gamma": 0.896120331699088,
+    "old_beta": -0.1278270894157696,
+    "old_exact_energy": -254.118086247905,
+    "new_gamma": 1.63504820746146,
+    "new_beta": 0.2067936192501303,
+    "new_exact_energy": -258.89273227285486,
+    "energy_gap": 4.7746460249498455,
+    "e_opt": -264.6479956675186,
+    "AR_old_point": 0.9602116411535476,
+    "AR_new_point": 0.9782531381726609,
+    "within_tested_window": false,
+    "nearest_grid_cell_to_converged": null,
+    "current_ideal_argmin_cell": [
+      3,
+      2
+    ],
+    "matches_current_ideal_argmin": null
+  },
+  "16low-vol": {
+    "old_gamma": 1.8194504979636397,
+    "old_beta": -0.09984441895363017,
+    "old_exact_energy": -419.468060420776,
+    "new_gamma": 1.91240580784687,
+    "new_beta": -0.17409215579681925,
+    "new_exact_energy": -429.6030631708142,
+    "energy_gap": 10.135002750038211,
+    "e_opt": -434.3381886719618,
+    "AR_old_point": 0.9657637098486483,
+    "AR_new_point": 0.9890980677622988,
+    "within_tested_window": true,
+    "nearest_grid_cell_to_converged": [
+      4,
+      2
+    ],
+    "current_ideal_argmin_cell": [
+      3,
+      2
+    ],
+    "matches_current_ideal_argmin": false
+  },
+  "16high-vol": {
+    "old_gamma": 1.7963354261020936,
+    "old_beta": 0.2168802664110553,
+    "old_exact_energy": -1110.895885021527,
+    "new_gamma": 0.36645951745841865,
+    "new_beta": -0.23136776243454202,
+    "new_exact_energy": -1115.2821669968873,
+    "energy_gap": 4.386281975360362,
+    "e_opt": -1134.467474474812,
+    "AR_old_point": 0.9792223311962318,
+    "AR_new_point": 0.9830887108625073,
+    "within_tested_window": false,
+    "nearest_grid_cell_to_converged": null,
+    "current_ideal_argmin_cell": [
+      3,
+      3
+    ],
+    "matches_current_ideal_argmin": null
+  },
+  "_ops_recheck_against_converged_cell": {
+    "12low-vol_4096": {
+      "hw_argmin": [
+        3,
+        3
+      ],
+      "current_ideal": [
+        4,
+        0
+      ],
+      "ops_current": "violated",
+      "converged_cell": [
+        4,
+        3
+      ],
+      "ops_vs_converged": "violated",
+      "changes": false
+    },
+    "12low-vol_8192": {
+      "hw_argmin": [
+        4,
+        0
+      ],
+      "current_ideal": [
+        4,
+        0
+      ],
+      "ops_current": "holds",
+      "converged_cell": [
+        4,
+        3
+      ],
+      "ops_vs_converged": "violated",
+      "changes": true
+    },
+    "16low-vol_4096": {
+      "hw_argmin": [
+        3,
+        1
+      ],
+      "current_ideal": [
+        3,
+        2
+      ],
+      "ops_current": "violated",
+      "converged_cell": [
+        4,
+        2
+      ],
+      "ops_vs_converged": "violated",
+      "changes": false
+    },
+    "16low-vol_8192": {
+      "hw_argmin": [
+        3,
+        2
+      ],
+      "current_ideal": [
+        3,
+        2
+      ],
+      "ops_current": "holds",
+      "converged_cell": [
+        4,
+        2
+      ],
+      "ops_vs_converged": "violated",
+      "changes": true
+    }
+  },
+  "_method": "Multi-start (8 starts) Nelder-Mead on exact statevector expectation energy (no shot noise), p=1, per instance Q matrix. within_tested_window checks whether the converged (gamma,beta) falls inside the existing +/-0.4rad grid window around the pinned reference point used for hardware data collection. nearest_grid_cell_to_converged is only meaningful when within_tested_window=true.",
+  "_caveat": "Nelder-Mead from 8 starts is a local/multi-start search, not a certified global optimum -- for 3 of 7 instances (8TSLA, 12high-vol, 16high-vol) the best point found lies outside the tested +/-0.4rad window entirely, meaning the existing hardware grids cannot evaluate OPS relative to it (no new QPU time was used to check further, per instructions)."
+}

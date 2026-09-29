@@ -1,0 +1,18 @@
+{
+  "label": "6asset_lowvol_hires_fez_today_pinned",
+  "n": 6,
+  "k": 3,
+  "gamma_star": 0.35307212672161004,
+  "beta_star": 0.22901024477664408,
+  "e_optimal": -16.885078379950897,
+  "initial_layout": [
+    124,
+    144,
+    142,
+    123,
+    143,
+    136
+  ],
+  "shots": 57344,
+  "approximation_ratio_hardware": 0.917378166287889
+}

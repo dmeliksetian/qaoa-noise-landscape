@@ -1,0 +1,31 @@
+{
+  "label": "8asset_lowvol_basinA_hires",
+  "n": 8,
+  "k": 4,
+  "variable_names": [
+    "AAPL",
+    "MSFT",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "AMZN",
+    "GOOGL",
+    "BRK-B"
+  ],
+  "gamma_star": 0.15663564965190077,
+  "beta_star": 0.21378191608353048,
+  "e_optimal": -46.265343264148036,
+  "random_baseline": 0.2734375,
+  "approximation_ratios": {
+    "Ideal sim": 0.9643160699276276,
+    "Noisy sim": 0.9529570344715438,
+    "Hardware": 0.9427848922511113
+  },
+  "feasibility_at_best": {
+    "ideal": 0.547119140625,
+    "noisy": 0.49755859375,
+    "hardware": 0.455810546875
+  },
+  "hw_partial": "156/169 points; last gamma-row missing",
+  "hw_job_id": "d7rmmmcf3ras73b73seg"
+}

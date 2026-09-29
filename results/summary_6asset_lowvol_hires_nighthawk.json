@@ -1,0 +1,27 @@
+{
+  "label": "6asset_lowvol_hires_nighthawk",
+  "n": 6,
+  "k": 3,
+  "variable_names": [
+    "AAPL",
+    "MSFT",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "AMZN"
+  ],
+  "gamma_star": 0.3382695157240051,
+  "beta_star": 0.21859318817301948,
+  "e_optimal": -16.885078379950897,
+  "random_baseline": 0.3125,
+  "approximation_ratios": {
+    "Ideal sim": 0.9438802190558752,
+    "Noisy sim": 0.9293261917428739,
+    "Hardware": 0.9032223544223558
+  },
+  "feasibility_at_best": {
+    "ideal": 0.6083984375,
+    "noisy": 0.5341796875,
+    "hardware": 0.475341796875
+  }
+}

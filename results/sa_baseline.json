@@ -1,0 +1,63 @@
+{
+  "6asset_lowvol_hires": {
+    "e_optimal": -16.885078379950897,
+    "ar_brute_force": 1.0000000391692518,
+    "ar_sa": 1.0000000391692518,
+    "ar_random": 1.0000000391692518,
+    "ar_hw_qaoa": 0.9141,
+    "sa_assets": [
+      "AAPL",
+      "JNJ",
+      "AMZN"
+    ],
+    "bf_assets": [
+      "AAPL",
+      "JNJ",
+      "AMZN"
+    ],
+    "sa_restarts": 1000,
+    "sa_time_s": 6.23
+  },
+  "8asset_lowvol": {
+    "e_optimal": -46.265343264148036,
+    "ar_brute_force": 0.9999999961727973,
+    "ar_sa": 0.9999999961727973,
+    "ar_random": 0.9999999961727973,
+    "ar_hw_qaoa": 0.9321,
+    "sa_assets": [
+      "AAPL",
+      "JPM",
+      "GOOGL",
+      "BRK-B"
+    ],
+    "bf_assets": [
+      "AAPL",
+      "JPM",
+      "GOOGL",
+      "BRK-B"
+    ],
+    "sa_restarts": 1000,
+    "sa_time_s": 6.2
+  },
+  "8asset_tsla": {
+    "e_optimal": -56.56299575921959,
+    "ar_brute_force": 0.999999770905471,
+    "ar_sa": 0.999999770905471,
+    "ar_random": 0.999999770905471,
+    "ar_hw_qaoa": 0.9365,
+    "sa_assets": [
+      "XOM",
+      "AMZN",
+      "TSLA",
+      "IBM"
+    ],
+    "bf_assets": [
+      "XOM",
+      "AMZN",
+      "TSLA",
+      "IBM"
+    ],
+    "sa_restarts": 1000,
+    "sa_time_s": 6.2
+  }
+}

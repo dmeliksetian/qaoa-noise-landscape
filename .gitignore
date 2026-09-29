@@ -1,0 +1,66 @@
+# Secrets / credentials — never commit
+.env
+.env.*
+*.secret
+.qiskit/
+qiskit-ibm.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.Python
+.venv/
+venv/
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+arxiv-build/
+
+# LaTeX build artifacts (keep .tex, .bib, .cls, .pdf)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*Notes.bib
+*.tar.gz
+
+# IDE
+.vscode/
+
+# Raw grid data — large binary files (~0.4–0.5 MB each), reproducible
+# from run_experiment.py. Track JSON summaries instead.
+results/*.npz
+
+# Pre-built QUBO instance files — reproducible from prepare_portfolio.py.
+# Track the sidecar .json metadata files; ignore the .npz binaries.
+instances/*.npz
+
+
+# Superseded / scratch results (non-hires 6-asset, initial prototype)
+results/grids.npz
+results/summary.json
+results/summary_6asset_lowvol.json
+
+# Old prototype figures (superseded by fig1–fig6 paper figures)
+figures/landscape.pdf
+figures/landscape.png
+figures/landscape_*.pdf
+figures/landscape_*.png
+figures/approximation_ratio.pdf
+figures/approximation_ratio.png
+figures/approximation_ratio_*.pdf
+figures/approximation_ratio_*.png
+figures/fig_zne.pdf
+figures/fig_zne.png
+
+# OS
+.DS_Store
+Thumbs.db
